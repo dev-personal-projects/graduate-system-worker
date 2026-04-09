@@ -1,3 +1,6 @@
+# ── Separate repo ────────────────────────────────────────────
+gradtrack-web/
+
 # ── Node / Frontend ─────────────────────────────────────────
 node_modules/
 .pnp
