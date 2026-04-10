@@ -35,3 +35,6 @@ jobs:
           resourceGroup: DevOps
           imageToBuild: devgradtrackregistry.azurecr.io/gradtrack-api:${{ github.sha }}
           imageToDeploy: devgradtrackregistry.azurecr.io/gradtrack-api:${{ github.sha }}
+          targetPort: 8080
+          ingress: external
+          environmentVariables: ASPNETCORE_ENVIRONMENT=Production KeyVault__VaultName=gradtrack-api-kv ASPNETCORE_URLS=http://+:8080
