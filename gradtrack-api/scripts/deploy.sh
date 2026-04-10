@@ -78,6 +78,7 @@ ensure_prereqs() {
   fi
   az provider register --namespace Microsoft.App --wait 2>/dev/null || true
   az provider register --namespace Microsoft.OperationalInsights --wait 2>/dev/null || true
+  az provider register --namespace Microsoft.ContainerRegistry --wait 2>/dev/null || true
   log_success "Prerequisites ready"
 }
 
