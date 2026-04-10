@@ -26,7 +26,7 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
-          appSourcePath: ${{ github.workspace }}/gradtrack-api
+          appSourcePath: ${{ github.workspace }}
           dockerfilePath: gradtrack-api/Dockerfile
           registryUrl: devgradtrackregistry.azurecr.io
           registryUsername: ${{ secrets.DEVGRADTRACKAPI_REGISTRY_USERNAME }}
