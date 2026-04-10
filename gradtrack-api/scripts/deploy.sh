@@ -239,17 +239,14 @@ ensure_keyvault_access() {
     --resource-group "$PROJECT_RESOURCE_GROUP" \
     --query "identity.principalId" -o tsv)
 
-  local kv_id
-  kv_id=$(az keyvault show --name "$KEY_VAULT_NAME" --query id -o tsv)
+  log_info "Assigning Key Vault access policy to managed identity"
+  az keyvault set-policy \
+    --name "$KEY_VAULT_NAME" \
+    --object-id "$principal_id" \
+    --secret-permissions get list \
+    --output none 2>/dev/null || log_warning "Key Vault policy already assigned — skipping"
 
-  log_info "Assigning 'Key Vault Secrets User' role to managed identity"
-  az role assignment create \
-    --assignee "$principal_id" \
-    --role "Key Vault Secrets User" \
-    --scope "$kv_id" \
-    --output none 2>/dev/null || log_warning "Role already assigned — skipping"
-
-  log_success "Managed identity has Key Vault Secrets User access"
+  log_success "Managed identity has Key Vault get/list access"
 }
 
 # ── Print summary ─────────────────────────────────────────────────────────────
