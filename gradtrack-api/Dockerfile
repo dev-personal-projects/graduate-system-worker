@@ -32,7 +32,4 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true
 
 EXPOSE 8080
 
-HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
-  CMD wget -qO- http://localhost:8080/api/health || exit 1
-
 ENTRYPOINT ["dotnet", "Api.dll"]
