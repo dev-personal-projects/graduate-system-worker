@@ -36,6 +36,8 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddApplicationInsightsTelemetry();
+
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
