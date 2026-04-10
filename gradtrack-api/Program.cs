@@ -1,10 +1,14 @@
 using Api.Committee;
+using Api.Configuration;
 using Api.Endpoints;
 using Api.Json;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Key Vault is the sole secrets source — throws on startup if unreachable
+builder.Configuration.AddKeyVault(builder.Environment);
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {

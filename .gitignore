@@ -26,9 +26,9 @@ build/
 
 # ── Secrets — NEVER commit these ────────────────────────────
 # Local dev settings contain real API keys, DB credentials, secrets
-**/appsettings.Development.json
-**/appsettings.*.local.json
-**/appsettings.local.json
+# **/appsettings.Development.json
+# **/appsettings.*.local.json
+# **/appsettings.local.json
 
 # .NET user secrets
 **/secrets.json
