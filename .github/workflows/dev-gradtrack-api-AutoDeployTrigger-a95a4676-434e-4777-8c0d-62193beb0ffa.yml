@@ -1,45 +1,37 @@
 name: Trigger auto deployment for dev-gradtrack-api
 
-# When this action will be executed
 on:
-  # Automatically trigger it when detected changes in repo
   push:
-    branches: 
-      [ main ]
+    branches:
+      [main]
     paths:
-    - '**'
-    - '.github/workflows/dev-gradtrack-api-AutoDeployTrigger-a95a4676-434e-4777-8c0d-62193beb0ffa.yml'
+      - 'gradtrack-api/**'
+      - '.github/workflows/dev-gradtrack-api-AutoDeployTrigger-a95a4676-434e-4777-8c0d-62193beb0ffa.yml'
 
-  # Allow manual trigger 
   workflow_dispatch:
-      
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout to the branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Azure Login
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.DEVGRADTRACKAPI_AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
-          appSourcePath: ${{ github.workspace }}
-          _dockerfilePathKey_: _dockerfilePath_
-          _targetLabelKey_: _targetLabel_
+          appSourcePath: ${{ github.workspace }}/gradtrack-api
+          dockerfilePath: gradtrack-api/Dockerfile
           registryUrl: devgradtrackregistry.azurecr.io
           registryUsername: ${{ secrets.DEVGRADTRACKAPI_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.DEVGRADTRACKAPI_REGISTRY_PASSWORD }}
           containerAppName: dev-gradtrack-api
           resourceGroup: DevOps
-          imageToBuild: devgradtrackregistry.azurecr.io/dev-gradtrack-api:${{ github.sha }}
-          
-            
-
-     
-
+          imageToBuild: devgradtrackregistry.azurecr.io/gradtrack-api:${{ github.sha }}
+          imageToDeploy: devgradtrackregistry.azurecr.io/gradtrack-api:${{ github.sha }}
